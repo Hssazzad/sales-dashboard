@@ -9,3 +9,4 @@ __pycache__/
 .pytest_cache/
 .DS_Store
 frontend/node_modules/
+scripts/migrate_database.py

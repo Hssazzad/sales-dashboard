@@ -1,19 +1,16 @@
 from __future__ import annotations
 
 import json
-import os
 import re
 from datetime import datetime
 from pathlib import Path
-from urllib.parse import quote_plus
 
 import pandas as pd
-from dotenv import load_dotenv
-from sqlalchemy import create_engine, text
+from sqlalchemy import text
 
+from src.db import get_engine
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 FRONTEND_DATA = PROJECT_ROOT / "frontend" / "src" / "data" / "dashboard-data.ts"
-load_dotenv(PROJECT_ROOT / ".env")
 
 SALES_QUERY = """
 SELECT
@@ -40,20 +37,6 @@ BUCKETS = [
     {"id": "parts", "name": "Parts & service", "color": "#FFB800", "ink": "dark"},
     {"id": "other", "name": "Other", "color": "#FF5A1F", "ink": "dark"},
 ]
-
-
-def get_engine():
-    required = ("DB_HOST", "DB_PORT", "DB_USER", "DB_PASSWORD", "DB_NAME")
-    missing = [key for key in required if key not in os.environ]
-    if missing:
-        raise RuntimeError(f"Missing database settings in .env: {', '.join(missing)}")
-    url = (
-        f"mysql+pymysql://{quote_plus(os.environ['DB_USER'])}:"
-        f"{quote_plus(os.environ['DB_PASSWORD'])}@"
-        f"{os.environ['DB_HOST']}:{os.environ['DB_PORT']}/"
-        f"{quote_plus(os.environ['DB_NAME'])}?charset=utf8mb4"
-    )
-    return create_engine(url, pool_pre_ping=True)
 
 
 def load_sales() -> pd.DataFrame:
