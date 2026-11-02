@@ -9,7 +9,7 @@
 6. After finishing a task, update the "Status" section of this file.
 
 ## Project
-- Path: C:\Users\SS\Printer-company-python\sales_forecast
+- Path: project root
 - Stack: Streamlit, Python, MySQL, pandas. Run: streamlit run app.py (from the sales_forecast folder, venv activated).
 - Business: printer and ink company. Reports must work for BOTH the live MySQL data and uploaded CSV files.
 
@@ -51,6 +51,7 @@
 14. Sales wise profit by customer
 
 ## Status
+- DONE: deployment preparation — minimal requirements.txt, deployment-safe .gitignore, main branch, and GitHub push.
 - DONE in engine.py: 1, 2, 3, 5, 9, 9b, 12 (without notify), 14. For CSV they work. For live MySQL, the customer/invoice reports need customer and invoice columns added to mysql_source.py (not done yet).
 - DONE: customer sidebar page, customer-section filtering, MySQL customer sales/due loaders, good-vs-bad customer scoring, and warranty customers (item 8).
 - DONE: item 11 (equivalent models using shared model codes in product names; no mapping table).
