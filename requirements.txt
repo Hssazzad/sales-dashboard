@@ -1,0 +1,9 @@
+altair
+numpy
+pandas
+PyMySQL
+python-dotenv
+SQLAlchemy
+streamlit
+streamlit-cookies-controller
+streamlit-searchbox
