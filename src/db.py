@@ -12,14 +12,14 @@ load_dotenv(PROJECT_ROOT / ".env")
 
 
 def _setting(name: str) -> str | None:
-    value = os.getenv(name)
-    if value is not None:
-        return value
+    """Read deployment secrets first, then fall back to local environment."""
     try:
         value = st.secrets.get(name)
     except (FileNotFoundError, KeyError):
-        return None
-    return str(value) if value is not None else None
+        value = None
+    if value is not None:
+        return str(value)
+    return os.getenv(name)
 
 
 def get_engine() -> Engine:
@@ -28,8 +28,9 @@ def get_engine() -> Engine:
     missing = [key for key, value in settings.items() if value is None]
     if missing:
         raise RuntimeError(
-            f"Missing database settings: {', '.join(missing)}. "
-            "Set them in .env or Streamlit Secrets."
+            "Missing required database configuration: "
+            f"{', '.join(missing)}. Set all five DB_* keys in "
+            "Streamlit Cloud Secrets, or in .env for local development."
         )
 
     user = quote_plus(settings["DB_USER"])
